@@ -15,6 +15,7 @@ namespace MedCentr.Models
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Здесь добавьте утверждения пользователя
             return userIdentity;
+            
         }
     }
 

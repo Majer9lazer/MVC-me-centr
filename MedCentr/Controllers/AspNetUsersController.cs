@@ -41,7 +41,7 @@ namespace MedCentr.Controllers
         // GET: AspNetUsers/Create
         public ActionResult Create()
         {
-            ViewBag.Med_Organization_id = new SelectList(db.Med_Organization, "Med_Organization_Id", "Name");
+            ViewBag.Med_Organization_id = new SelectList(db.Med_Organizations, "Med_Organization_Id", "Name");
             ViewBag.Asp_net_Roles_Id= new SelectList(db.AspNetRoles, "Id", "Name");
             return View();
         }
@@ -60,7 +60,7 @@ namespace MedCentr.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Med_Organization_id = new SelectList(db.Med_Organization, "Med_Organization_Id", "Name", aspNetUser.Med_Organization_id);
+            ViewBag.Med_Organization_id = new SelectList(db.Med_Organizations, "Med_Organization_Id", "Name", aspNetUser.Med_Organization_id);
             return View(aspNetUser);
         }
 
@@ -76,7 +76,7 @@ namespace MedCentr.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Med_Organization_id = new SelectList(db.Med_Organization, "Med_Organization_Id", "Name", aspNetUser.Med_Organization_id);
+            ViewBag.Med_Organization_id = new SelectList(db.Med_Organizations, "Med_Organization_Id", "Name", aspNetUser.Med_Organization_id);
             return View(aspNetUser);
         }
 
@@ -93,7 +93,7 @@ namespace MedCentr.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.Med_Organization_id = new SelectList(db.Med_Organization, "Med_Organization_Id", "Name", aspNetUser.Med_Organization_id);
+            ViewBag.Med_Organization_id = new SelectList(db.Med_Organizations, "Med_Organization_Id", "Name", aspNetUser.Med_Organization_id);
             return View(aspNetUser);
         }
 

@@ -18,7 +18,7 @@ namespace MedCentr.Controllers
         // GET: Med_Organization
         public async Task<ActionResult> Index()
         {
-            return View(await db.Med_Organization.ToListAsync());
+            return View(await db.Med_Organizations.ToListAsync());
         }
 
         // GET: Med_Organization/Details/5
@@ -28,7 +28,7 @@ namespace MedCentr.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Med_Organization med_Organization = await db.Med_Organization.FindAsync(id);
+            Med_Organization med_Organization = await db.Med_Organizations.FindAsync(id);
             if (med_Organization == null)
             {
                 return HttpNotFound();
@@ -52,7 +52,7 @@ namespace MedCentr.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Med_Organization.Add(med_Organization);
+                db.Med_Organizations.Add(med_Organization);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -67,7 +67,7 @@ namespace MedCentr.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Med_Organization med_Organization = await db.Med_Organization.FindAsync(id);
+            Med_Organization med_Organization = await db.Med_Organizations.FindAsync(id);
             if (med_Organization == null)
             {
                 return HttpNotFound();
@@ -98,7 +98,7 @@ namespace MedCentr.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Med_Organization med_Organization = await db.Med_Organization.FindAsync(id);
+            Med_Organization med_Organization = await db.Med_Organizations.FindAsync(id);
             if (med_Organization == null)
             {
                 return HttpNotFound();
@@ -111,8 +111,8 @@ namespace MedCentr.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Med_Organization med_Organization = await db.Med_Organization.FindAsync(id);
-            db.Med_Organization.Remove(med_Organization);
+            Med_Organization med_Organization = await db.Med_Organizations.FindAsync(id);
+            db.Med_Organizations.Remove(med_Organization);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

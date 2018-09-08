@@ -1,15 +1,30 @@
-﻿@model IEnumerable<MedCentr.Models.Model.Patient>
+﻿@using System.Web.UI.WebControls
+@model IEnumerable<MedCentr.Models.Model.Patient>
 
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
+<br style="clear: both" />
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+@using (Ajax.BeginForm("GetPatientsByIIN", new AjaxOptions() { InsertionMode = InsertionMode.Replace, UpdateTargetId = "PatientsTable" }))
+{
+    <div class="form-group">
+        <div class="col-md-4">
+            @Html.TextBox("IIN", null, new { @class = "form-control", @placeholder = "870114222555" })
+        </div>
+        <button class="btn btn-success">Поиск</button>
+    </div>
+}
+
+
+
+<br style="clear: both" />
+<table class="table" id="PatientsTable">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.FirstName)
@@ -32,32 +47,36 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Patronomic)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IIN)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PhoneNumber_)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Med_Organization.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PatientId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PatientId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PatientId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Patronomic)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IIN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber_)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Med_Organization.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.PatientId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.PatientId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.PatientId })
+            </td>
+        </tr>
+    }
 
 </table>
+@section scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}

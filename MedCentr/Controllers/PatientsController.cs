@@ -42,7 +42,7 @@ namespace MedCentr.Controllers
         public async Task<PartialViewResult> GetAllMedOrganizations()
         {
          
-            return PartialView(await db.Med_Organization.ToListAsync());
+            return PartialView(await db.Med_Organizations.ToListAsync());
         }
         [Authorize(Roles = "admin")]
         // GET: Patients/Create
@@ -62,12 +62,19 @@ namespace MedCentr.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 db.Patients.Add(patient);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                db.Requests_for_attachment.Add(new Requests_for_attachment()
+                {
+                    DateOfCreationg = DateTime.Now, QueryStatus = "Новый", DateOfTreatments = null,
+                    PatientId = db.Patients.FirstOrDefault(f => f.FirstName == patient.FirstName)?.PatientId
+                });
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index","RequestsForAttachment");
             }
 
-            ViewBag.Med_Organization_Id = new SelectList(db.Med_Organization, "Med_Organization_Id", "Name", patient.Med_Organization_Id);
+            ViewBag.Med_Organization_Id = new SelectList(db.Med_Organizations, "Med_Organization_Id", "Name", patient.Med_Organization_Id);
             return View(patient);
         }
 
@@ -83,7 +90,7 @@ namespace MedCentr.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Med_Organization_Id = new SelectList(db.Med_Organization, "Med_Organization_Id", "Name", patient.Med_Organization_Id);
+            ViewBag.Med_Organization_Id = new SelectList(db.Med_Organizations, "Med_Organization_Id", "Name", patient.Med_Organization_Id);
             return View(patient);
         }
 
@@ -100,7 +107,7 @@ namespace MedCentr.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.Med_Organization_Id = new SelectList(db.Med_Organization, "Med_Organization_Id", "Name", patient.Med_Organization_Id);
+            ViewBag.Med_Organization_Id = new SelectList(db.Med_Organizations, "Med_Organization_Id", "Name", patient.Med_Organization_Id);
             return View(patient);
         }
 
@@ -137,6 +144,21 @@ namespace MedCentr.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public async Task<ActionResult> GetPatientsByIin(string iin=null)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                if (string.IsNullOrEmpty(iin))
+                {
+                    return PartialView(await db.Patients.ToListAsync());
+                }
+                var test = await db.Patients.Where(w => w.IIN.Contains(iin)).ToListAsync();
+                return PartialView(test);
+            }
+
+            return RedirectToAction("Index", "Patients");
         }
     }
 }

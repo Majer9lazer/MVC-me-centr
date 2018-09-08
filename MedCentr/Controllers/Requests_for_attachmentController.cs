@@ -14,7 +14,7 @@ namespace MedCentr.Controllers
     public class RequestsForAttachmentController : Controller
     {
         private Medical_DbEntities db = new Medical_DbEntities();
-        
+
         // GET: Requests_for_attachment
         public async Task<ActionResult> Index()
         {
@@ -76,6 +76,9 @@ namespace MedCentr.Controllers
             }
             ViewBag.PatientId = new SelectList(db.Patients, "PatientId", "FirstName", requestsForAttachment.PatientId);
             return View(requestsForAttachment);
+
+
+
         }
 
         // POST: Requests_for_attachment/Edit/5
@@ -87,6 +90,7 @@ namespace MedCentr.Controllers
         {
             if (ModelState.IsValid)
             {
+                requestsForAttachment.DateOfTreatments = DateTime.Now;
                 db.Entry(requestsForAttachment).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -129,6 +133,12 @@ namespace MedCentr.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public async Task<ActionResult> GetPatientsByMedId(int medId)
+        {
+            var query = await db.Requests_for_attachment.Where(w => w.Patient.Med_Organization_Id == medId).ToListAsync();
+            return PartialView(query);
         }
     }
 }

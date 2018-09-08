@@ -87,9 +87,10 @@
                     $("#Med_Organizarion_select").prepend($('<option value="0" disabled="disabled">Загрузка...</option>'));
                     $.post('@Url.Action("GetAllMedOrganizations", "Patients")', null, function(e) {
                         $("#Med_Organizarion_select").empty();
-                        $('#MedOrganizationList').append(e.data);
+                        console.log(e);
+                        $('#MedOrganizationList').empty();
+                        $('#MedOrganizationList').append(e);
                     });
-                    $('#MedOrganizationList').load('@Url.Action("GetAllMedOrganizations","Patients")');
                 }
             });
         });

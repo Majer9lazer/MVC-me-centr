@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title – приложение ASP.NET</title>
@@ -25,11 +25,11 @@
                     {
                         <li>@Html.ActionLink("Пользователи", "Index", "AspNetUsers")</li>
                         <li>@Html.ActionLink("Создать мед организацию", "Create", "MedOrganization")</li>
+                        <li>@Html.ActionLink("Отобразить всех пациентов", "Index", "Patients")</li>
                         <li>@Html.ActionLink("Прикрепить пациента", "Create", "Patients")</li>
+                        <li>@Html.ActionLink("Отобразить запросы ", "Index", "RequestsForAttachment")</li>
                         <li>@Html.ActionLink("Регистрация", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
                     }
-
-                    <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

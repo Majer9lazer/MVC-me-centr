@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data.Entity;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -9,6 +11,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MedCentr.Models;
+using MedCentr.Models.Model;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace MedCentr.Controllers
@@ -16,11 +19,14 @@ namespace MedCentr.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private Medical_DbEntities _db = new Medical_DbEntities();
+
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
         public AccountController()
         {
+
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -117,11 +123,14 @@ namespace MedCentr.Controllers
                 return View(model);
             }
 
+
+
             // Приведенный ниже код защищает от атак методом подбора, направленных на двухфакторные коды. 
             // Если пользователь введет неправильные коды за указанное время, его учетная запись 
             // будет заблокирована на заданный период. 
             // Параметры блокирования учетных записей можно настроить в IdentityConfig
             var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
+
             switch (result)
             {
                 case SignInStatus.Success:
@@ -141,6 +150,7 @@ namespace MedCentr.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult Register()
         {
+            ViewBag.MedOrganizationId = new SelectList(_db.Med_Organizations.ToList(), "Med_Organization_Id", "Name");
             return View();
         }
 
@@ -158,6 +168,21 @@ namespace MedCentr.Controllers
 
                 if (result.Succeeded)
                 {
+                    try
+                    { 
+                        var createUser1 = _db.AspNetUsers.FirstOrDefault(f => f.Email == model.Email);
+                        Debug.Assert(createUser1 != null, nameof(createUser1) + " != null");
+                        createUser1.Med_Organization_id = model.MedOrganizationId;
+                        _db.Entry(createUser1).State = EntityState.Modified;
+                        await _db.SaveChangesAsync();
+                        
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        throw;
+                    }
+                   
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // Дополнительные сведения о включении подтверждения учетной записи и сброса пароля см. на странице https://go.microsoft.com/fwlink/?LinkID=320771.

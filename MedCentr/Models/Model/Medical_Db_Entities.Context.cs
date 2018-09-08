@@ -30,7 +30,7 @@ namespace MedCentr.Models.Model
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-        public virtual DbSet<Med_Organization> Med_Organization { get; set; }
+        public virtual DbSet<Med_Organization> Med_Organizations { get; set; }
         public virtual DbSet<Patient> Patients { get; set; }
         public virtual DbSet<Requests_for_attachment> Requests_for_attachment { get; set; }
     }
