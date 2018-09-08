@@ -1,0 +1,51 @@
+﻿@model IEnumerable<MedCentr.Models.Model.Requests_for_attachment>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfCreationg)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfTreatments)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QueryStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Patient.FirstName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateOfCreationg)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateOfTreatments)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QueryStatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Patient.FirstName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Requests_for_attachment_Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Requests_for_attachment_Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Requests_for_attachment_Id })
+        </td>
+    </tr>
+}
+
+</table>

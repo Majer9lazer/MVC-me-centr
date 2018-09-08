@@ -1,0 +1,10 @@
+﻿@using MedCentr.Models.Model
+@model IEnumerable<MedCentr.Models.Model.Med_Organization>
+
+
+    <select class="form-control" id="Med_Organization_Id" name="Med_Organization_Id">
+        @foreach (Med_Organization organization in Model)
+        {
+            <option value="@organization.Med_Organization_Id">@organization.Name</option>
+        }
+    </select>

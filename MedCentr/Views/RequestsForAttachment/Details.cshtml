@@ -1,0 +1,50 @@
+﻿@model MedCentr.Models.Model.Requests_for_attachment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Requests_for_attachment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfCreationg)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfCreationg)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfTreatments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfTreatments)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QueryStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QueryStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Patient.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Patient.FirstName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Requests_for_attachment_Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
